@@ -1,0 +1,87 @@
+{
+  "name": "pattern_recognition",
+  "collection": [
+    {
+      "name": "pattern_recognition",
+      "architecture": "OccamNet",
+      "hiddens": [
+        50,
+        50
+      ],
+      "bases": [
+        "SIGMOID",
+        "SIGMOID",
+        "TANH",
+        "TANH",
+        "ADD4",
+        "ADD4",
+        "ADD9",
+        "ADD9",
+        "ADDITION",
+        "ADDITION",
+        "MIN",
+        "MIN",
+        "MAX",
+        "MAX"
+      ],
+      "constants": [
+        "ONE",
+        "ZERO",
+        "ONE",
+        "ZERO",
+        "ONE",
+        "NONE",
+        "NONE"
+      ],
+      "target_function": "NALU",
+      "domain_type": "continuous",
+      "data_domain": [
+        [
+          -10,
+          10
+        ],
+        [
+          -10,
+          10
+        ],
+        [
+          -10,
+          10
+        ],
+        [
+          -10,
+          10
+        ]
+      ],
+      "recurrence_depth": 1,
+      "recording_rate": 100,
+      "depth": 2,
+      "record": true,
+      "dataset_size": 600,
+      "batch_size": 1000,
+      "sampling_size": 150,
+      "truncation_parameter": 20,
+      "number_of_inputs": 2048,
+      "number_of_outputs": 2,
+      "learning_rate": 0.00001,
+      "variances": 0.001,
+      "temperature": 1,
+      "last_layer_temperature": 10,
+      "epochs": 3000,
+      "coupled_forward": false,
+      "skip_connections": true,
+      "variance_evolution": "still",
+      "temperature_evolution": "still",
+      "training_method": "evolutionary",
+      "depth_counter": 0,
+      "visualization": [
+        "network",
+        "expression",
+        "loss"
+      ],
+      "pattern_recognition": true,
+      "use_cuda": true,
+      "imagenet": true
+    }
+  ]
+}

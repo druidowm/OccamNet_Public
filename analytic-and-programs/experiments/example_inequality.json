@@ -1,0 +1,39 @@
+{
+  "name": "inequality_program",
+  "collection": [
+    {
+      "name": "example",
+      "architecture": "OccamNet",
+      "hiddens": [50, 50],
+      "bases":["INEQUALITY2", "INEQUALITY2", "MULTIPLICATION", "ADDITION", "ADDITION", "DIVISION"],
+      "constants": ["ONE"],
+      "target_function": "BASIC_INEQUALITY",
+      "domain_type": "continuous",
+      "data_domain": [[-20, 20]],
+      "recurrence_depth": 1,
+      "depth": 2,
+      "repeat": 1,
+      "record": true,
+      "recording_rate": 50,
+      "dataset_size": 600,
+      "batch_size": 200,
+      "sampling_size": 200,
+      "truncation_parameter": 10,
+      "number_of_inputs": 1,
+      "number_of_outputs": 1,
+      "regularization": false,
+      "learning_rate": 0.005,
+      "variances": 0.01,
+      "temperature": 1,
+      "last_layer_temperature": 3,
+      "epochs": 4500,
+      "coupled_forward": false,
+      "skip_connections": true,
+      "variance_evolution": "still",
+      "temperature_evolution": "still",
+      "training_method": "evolutionary",
+      "depth_counter": 0,
+      "visualization": ["network", "loss"]
+    }
+  ]
+}

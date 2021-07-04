@@ -1,0 +1,4 @@
+Dataset:		Training Score		Training Params		Validation Score		Validation Params		Test Result		Average Time
+1027_ESL,		0.05630799835374444,		[6, 1, 0, 0.2, 10],		0.1326185519872556,		[6, 0.5, 0.4, 0.2, 10],		0.14708982120118838,		5.172020198951165
+Dataset:		Training Score		Training Params		Validation Score		Validation Params		Test Result		Average Time
+1028_SWD,		0.4425291614698399,		[6, 1, 0, 0.2, 10],		0.5668000662467684,		[6, 1, 0.2, 0.01, 10],		0.6476451063746687,		6.797849895817538

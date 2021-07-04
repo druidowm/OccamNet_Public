@@ -1,0 +1,4 @@
+Dataset:		Training Score		Training Params		Validation Score		Validation Params		Test Result		Average Time
+228_elusage,		0.02880211760323412,		[6, 1, 0, 0.1, 10],		0.10569828933129784,		[6, 0.75, 0, 0.2, 10],		0.14971099275035005,		1.7139755470181506
+Dataset:		Training Score		Training Params		Validation Score		Validation Params		Test Result		Average Time
+229_pwLinear,		9.009633750963293e-07,		[6, 0.75, 0, 0.2, 10],		0.08319682723381965,		[6, 0.75, 0.4, 0.01, 10],		0.16528182152666418,		3.4814196654554044

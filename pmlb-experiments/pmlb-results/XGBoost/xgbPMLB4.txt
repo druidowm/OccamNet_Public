@@ -1,0 +1,4 @@
+Dataset:		Training Score		Training Params		Validation Score		Validation Params		Test Result		Average Time
+207_autoPrice,		0.0004717320471918508,		[6, 1, 0, 0.2, 10],		0.10530421581800295,		[6, 0.75, 0.2, 0.1, 10],		0.09381027520460608,		4.791577726093431
+Dataset:		Training Score		Training Params		Validation Score		Validation Params		Test Result		Average Time
+210_cloud,		3.79669702859283e-07,		[6, 0.75, 0, 0.2, 10],		0.1622381393575974,		[6, 0.5, 0.1, 0.0001, 10],		0.07994620091263684,		2.1114282929918002

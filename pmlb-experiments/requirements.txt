@@ -1,0 +1,6 @@
+numpy
+torch
+sklearn
+pmlb
+deap
+matplotlib

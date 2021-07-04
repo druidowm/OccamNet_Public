@@ -1,0 +1,4 @@
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+207_autoPrice,		0.16879180073738098,		['y_0=(((sin(x_10)*(x_3*x_4))*(sin(x_10)*x_6))+(cos(cos(x_12))*x_7))'],		[1, 10, 1, 0.9, 2000, 5],		0.11410050094127655,		['y_0=((((x_6/x_6)*x_6)*cos(sin(x_6)))*((sin(x_3)/(x_14/x_8))/(sin(x_3)/(x_14/x_8))))'],		[1, 10, 1, 0.5, 1000, 5],		0.13481730222702026,		763.7457618173212
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+210_cloud,		0.1542131006717682,		['y_0=((((x_3+x_2)*(x_0/x_0))*((x_3+x_2)*(x_0/x_0)))/((sin(x_4)+(x_2+x_3))+((x_3+x_2)*(x_0/x_0))))'],		[0.5, 10, 0.5, 0.1, 2000, 1],		0.02704770117998123,		['y_0=(((x_2+x_3)*cos(x_0))*cos((sin(x_4)/(x_2+x_3))))'],		[0.5, 10, 1, 0.9, 1000, 5],		0.08376092463731766,		482.70947057562364

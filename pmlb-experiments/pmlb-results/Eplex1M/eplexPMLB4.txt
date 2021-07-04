@@ -1,0 +1,4 @@
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+207_autoPrice,		0.15247399633393352,		add(multiply(multiply(subtract(ARG4, ARG6), sin(ARG4)), subtract(ARG7, multiply(ARG9, ARG13))), ARG6),		[2000, 4, 0.2],		0.1285281039403285,		ARG6,		[500, 4, 0.8],		0.1499277439194744,		4516.577424856317
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+210_cloud,		0.13042447744864474,		multiply(cos(multiply(cos(ARG3), cos(ARG3))), add(sin(subtract(ARG4, ARG3)), add(ARG2, subtract(ARG3, ARG4)))),		[2000, 4, 0.5],		0.03645961548589808,		multiply(add(ARG2, ARG3), cos(ARG0)),		[500, 4, 0.8],		0.09665679421447654,		4604.980356782467

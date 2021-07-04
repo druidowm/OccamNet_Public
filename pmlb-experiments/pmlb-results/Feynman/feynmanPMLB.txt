@@ -1,0 +1,16 @@
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+1030_ERA,		0.8863456025364769,		0.845634980614+np.cos(np.exp((((((x1+(x0+np.exp(np.sin(x1)))))*x2)*x3)/np.log(np.log(np.exp(np.exp(((((x1+(x0+np.exp(np.sin(x1)))))*x2)*x3)))))))),		[100, 0, 500],		1.040371297102673,		0.845634980614+np.cos(np.exp((((((x1+(x0+np.exp(np.sin(x1)))))*x2)*x3)/np.log(np.log(np.exp(np.exp(((((x1+(x0+np.exp(np.sin(x1)))))*x2)*x3)))))))),		[100, 0, 500],		0.894971091639051,		4221.7264631111175
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+1096_FacultySalaries,		0.16246631185861687,		-0.065716665852+(x3*np.cos(np.sin((x0-(x2*x0))))),		[100, 0, 100],		0.06649332683506914,		0.013797802160+x1,		[100, 0, 100],		0.08791314939295655,		5076.72931347508
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+192_vineyard,		0.7130877927837408,		0.439677287983+(x1/np.exp(np.exp((x1+np.exp(np.exp(np.cos(x1))))))),		[100, 0, 100],		0.8018398862171423,		0.07,		[100, 0, 100],		0.6975484762185268,		1221.9211774659343
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+210_cloud,		0.17091360911417403,		0.573201090768*(x2+(x3*np.cos(x2))),		[100, 0, 100],		0.043502725947988916,		0.558380700818*(x3+(x2/np.exp(np.cos(x1)))),		[100, 0, 100],		0.10896632407333101,		6195.739428666886
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+228_elusage,		0.17751664329699113,		-0.050638447726+(np.log((x0/np.sin(x0)))-x0),		[100, 0, 100],		0.17781942253215074,		-0.050638447726+(np.log((x0/np.sin(x0)))-x0),		[100, 0, 100],		0.2735953579102204,		1223.2639971044846
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+230_machine_cpu,		0.10279946895403633,		0.260081489362*(x4+(x2-np.cos(np.exp(x3)))),		[100, 0, 100],		0.28890102374678983,		-0.019066840532+(x2*np.cos(np.cos((np.exp(x2)/x2)))),		[100, 0, 100],		0.8644608562898949,		6899.387229528278
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+485_analcatdata_vehicle,		0.456246529241116,		-0.817229341008*x0,		[100, 0, 500],		0.5239134107962105,		-0.191086946707+np.cos((x2+np.exp(x0))),		[100, 0, 500],		0.3242816031446251,		5869.321513510309
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+1027_ESL,		0.4645931317107603,		0.126791352845+x3,		[100, 0, 100],		0.44890707064045915,		0.138663329076+np.sin(x3),		[100, 0, 100],		0.7405059301443147,		4498.00020004902

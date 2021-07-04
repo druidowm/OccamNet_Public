@@ -1,0 +1,4 @@
+Dataset:		Training Score		Training Params		Validation Score		Validation Params		Test Result		Average Time
+192_vineyard,		0.03875199682740899,		[6, 1, 0, 0.2, 10],		0.17531055213880511,		[6, 1, 0.4, 0.05, 10],		0.3155076963380006,		1.0763055295786923
+Dataset:		Training Score		Training Params		Validation Score		Validation Params		Test Result		Average Time
+195_auto_price,		0.0004717320471918508,		[6, 1, 0, 0.2, 10],		0.10530421581800295,		[6, 0.75, 0.2, 0.1, 10],		0.09381027520460608,		4.685392466108832

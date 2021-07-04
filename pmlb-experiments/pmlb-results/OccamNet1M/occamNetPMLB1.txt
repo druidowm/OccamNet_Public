@@ -1,0 +1,4 @@
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+1029_LEV,		0.4858865737915039,		['y_0=(((x_0+x_1)+sin(x_3))/exp(cos(sin(x_1))))'],		[1, 10, 0.5, 0.1, 2000, 5],		0.6335342526435852,		['y_0=(((x_0+x_1)+(x_3+x_2))/exp(cos(sin(x_1))))'],		[1, 10, 0.5, 0.1, 2000, 5],		0.5422880053520203,		4767.1128344628705
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+1030_ERA,		0.6392598748207092,		['y_0=(((x_1+x_0)*cos(cos(x_1)))*(cos(sin(x_1))*cos(cos(x_3))))'],		[0.5, 10, 1, 0.5, 1000, 5],		0.6618993282318115,		['y_0=((sin((x_2/x_2))*(sin(x_2)+(x_0+x_1)))*(cos(cos(x_3))*cos(sin(x_3))))'],		[1, 10, 0.5, 0.1, 1000, 5],		0.7131978869438171,		4510.9684672567655

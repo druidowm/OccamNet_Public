@@ -1,0 +1,2 @@
+Dataset:		Training Score		Training Params		Validation Score		Validation Params		Test Result		Average Time
+485_analcatdata_vehicle,		1.2482661504911768e-06,		[6, 0.75, 0, 0.05, 10],		0.1748268158927188,		[6, 0.5, 0, 0.05, 10],		0.18828989222969372,		2.4010871386279664

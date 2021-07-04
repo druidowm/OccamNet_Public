@@ -1,0 +1,4 @@
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+230_machine_cpu,		0.08154085205867025,		protectedDiv(multiply(ARG2, add(add(ARG3, ARG3), add(ARG1, ARG3))), add(add(add(ARG3, ARG2), add(ARG3, ARG3)), sin(add(ARG3, ARG3)))),		[500, 4, 0.8],		0.1979985926250501,		multiply(cos(cos(multiply(ARG2, ARG3))), ARG2),		[500, 4, 0.2],		0.48692214657513394,		4561.351706458256
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+4544_GeographicalOriginalofMusic,		0.4140526142456599,		subtract(ARG99, multiply(subtract(ARG99, ARG70), cos(protectedDiv(ARG89, ARG89)))),		[1000, 4, 0.2],		0.31993380376287367,		multiply(cos(cos(protectedDiv(ARG41, ARG42))), ARG99),		[1000, 4, 0.5],		0.4415718627804252,		4785.489795700543

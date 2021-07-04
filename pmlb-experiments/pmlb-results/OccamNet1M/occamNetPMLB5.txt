@@ -1,0 +1,4 @@
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+228_elusage,		0.1357908844947815,		['y_0=(((sin(x_0)*(x_1*x_0))*(sin(x_0)*log|x_0|))-cos(((x_1*x_0)-x_1)))'],		[0.5, 10, 1, 0.5, 1000, 5],		0.11893323063850403,		['y_0=(((sin(x_0)*sin(x_0))*((x_1*x_1)*log|x_0|))-sin(x_0))'],		[0.5, 10, 0.5, 0.5, 1000, 5],		0.18020492792129517,		258.64786690707683
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+229_pwLinear,		0.25471076369285583,		['y_0=((((x_0-x_1)-(x_2+x_6))+(exp(x_0)+(x_0+x_0)))*(((x_0*x_0)*log|x_0|)*((x_0-x_5)-(x_4-x_0))))'],		[1, 10, 1, 0.1, 2000, 5],		0.19263848662376404,		['y_0=((((x_0-x_1)-(x_2+x_6))+(exp(x_0)+(x_0+x_0)))*(((x_0*x_0)*log|x_0|)*((x_0-x_5)-(x_4-x_0))))'],		[1, 10, 1, 0.1, 2000, 5],		0.22344115376472473,		944.3393907740634

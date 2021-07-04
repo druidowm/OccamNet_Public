@@ -1,0 +1,107 @@
+{
+  "name": "implicit",
+  "collection": [
+    {
+      "name": "hyperbola",
+      "architecture": "OccamNet",
+      "hiddens": [
+        50,
+        50
+      ],
+      "bases": [
+        "MULTIPLICATION",
+        "MULTIPLICATION",
+        "ADDITION"
+      ],
+      "constants": [],
+      "target_function": "HYPERBOLA",
+      "domain_type": "continuous",
+      "data_domain": [
+        [
+          0.1,
+          1
+        ]
+      ],
+      "recurrence_depth": 1,
+      "depth": 1,
+      "record": true,
+      "dataset_size": 600,
+      "batch_size": 200,
+      "sampling_size": 50,
+      "truncation_parameter": 5,
+      "number_of_inputs": 2,
+      "number_of_outputs": 1,
+      "regularization": false,
+      "learning_rate": 0.1,
+      "variances": 0.005,
+      "temperature": 1,
+      "last_layer_temperature": 2,
+      "epochs": 20000,
+      "coupled_forward": false,
+      "skip_connections": true,
+      "variance_evolution": "still",
+      "temperature_evolution": "still",
+      "training_method": "evolutionary",
+      "depth_counter": 0,
+      "visualization": [
+        "image",
+        "network",
+        "expression",
+        "loss"
+      ],
+      "implicit": true
+    },
+    {
+      "name": "hyperbola_one",
+      "architecture": "OccamNet",
+      "hiddens": [
+        50,
+        50
+      ],
+      "bases": [
+        "MULTIPLICATION",
+        "MULTIPLICATION",
+        "ADDITION"
+      ],
+      "constants": [
+        "ONE"
+      ],
+      "target_function": "CIRCLE",
+      "domain_type": "continuous",
+      "data_domain": [
+        [
+          0.1,
+          1
+        ]
+      ],
+      "recurrence_depth": 1,
+      "depth": 1,
+      "record": true,
+      "dataset_size": 600,
+      "batch_size": 200,
+      "sampling_size": 50,
+      "truncation_parameter": 5,
+      "number_of_inputs": 2,
+      "number_of_outputs": 1,
+      "regularization": false,
+      "learning_rate": 0.1,
+      "variances": 0.005,
+      "temperature": 1,
+      "last_layer_temperature": 2,
+      "epochs": 20000,
+      "coupled_forward": false,
+      "skip_connections": true,
+      "variance_evolution": "still",
+      "temperature_evolution": "still",
+      "training_method": "evolutionary",
+      "depth_counter": 0,
+      "visualization": [
+        "image",
+        "network",
+        "expression",
+        "loss"
+      ],
+      "implicit": true
+    }
+  ]
+}

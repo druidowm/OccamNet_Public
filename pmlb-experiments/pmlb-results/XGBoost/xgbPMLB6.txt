@@ -1,0 +1,4 @@
+Dataset:		Training Score		Training Params		Validation Score		Validation Params		Test Result		Average Time
+230_machine_cpu,		0.0043524911673717605,		[6, 1, 0, 0.1, 10],		0.16376487014372842,		[6, 0.5, 0, 0.2, 10],		0.621949384869274,		4.705100423966845
+Dataset:		Training Score		Training Params		Validation Score		Validation Params		Test Result		Average Time
+4544_GeographicalOriginalofMusic,		3.8259923336168505e-07,		[6, 1, 0, 0.2, 10],		0.19595704362374827,		[6, 0.5, 0.2, 0.01, 10],		0.22771487227838788,		139.12807087116565

@@ -1,0 +1,2 @@
+Dataset:		Training Score		Training Result		Training Params		Validation Score		Validation Result		Validation Params		Test Result		Average Time
+485_analcatdata_vehicle,		0.21610329243313445,		sin(subtract(protectedDiv(add(ARG1, ARG3), subtract(ARG2, ARG0)), multiply(ARG0, exp(ARG0)))),		[2000, 4, 0.2],		0.5671898196790839,		cos(add(multiply(subtract(ARG0, ARG2), add(ARG0, ARG1)), protectedDiv(exp(ARG0), ARG2))),		[500, 4, 0.5],		0.44148591509913643,		4533.780420890492
