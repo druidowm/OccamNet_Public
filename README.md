@@ -1,6 +1,6 @@
 # OccamNet Implementation
 
-The files are organized in four folders: `analytic-and-programs`, `implicit`, `image-recognition`, and `pmlb-experiments`. Each contains specific code for different tasks. 
+The files are organized in four folders: `analytic-and-programs`, `implicit`, `image-recognition`, and `pmlb-experiments`. Each contains specific code for different tasks. Note that the `Videos`, `analytic-and-programs`, and `image-recognition` folders are also present in an earlier version of this repository which can be found [here](https://github.com/AllanSCosta/occam-net).
 
 # `analytic-and-programs` and `image-recognition`
 The `analytic-and-programs` and `image-recognition` folders are structured similarly. The neural network architecture is specified in `neural_net.py`, and training is programmed in the file `train.py`. We run OccamNet through an "Experiment" interface, which is specified in a .json file present in the subdirectory `experiments`.
