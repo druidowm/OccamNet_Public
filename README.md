@@ -99,6 +99,10 @@ The network architecture is specified in `NetworkRegularization.py`, loss functi
 We include a number of example experiments, all of which begin with `ExperimentTime`.
 
 
+# `constant-fitting`
+This folder contains code optimized for fitting constants. Its structure is the same as that of `implicit` except it only has one example experiment, `ConstantFittingDemo.py`.
+
+
 # `pmlb-experiments`
 This folder contains code for testing OccamNet, genetic programming with Epsilon-Lexicase selection (Eplex), AI Feynman 2.0 (AIF), and Extreme Gradient Boosting (XGB) on datasets from the Penn Machine Learning Benchmarks repository. OccamNet is implemented with a similar structure to its implementation in `implicit`. Eplex is implemented in the `GeneticAlgorithm.py` file. AI Feynman 2.0 is implemented in the `AIFeyman` folder, which is only a slight modification of the AI Feynman 2.0 source code freely available [on GitHub](https://github.com/SJ001/AI-Feynman). XGB is implemented in the `XGBoostClass.py` file. 
 
