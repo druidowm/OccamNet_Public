@@ -4,6 +4,8 @@ from deap import creator
 from deap import tools
 from deap import gp
 
+from inspect import signature
+
 #from scoop import futures
 
 import operator
@@ -43,10 +45,9 @@ def protectedLog(item):
     return log
 
 #@ray.remote
-def geneticRun(params, train_X, train_Y, bases):
+def geneticRun(params, train_X, train_Y, bases, epochs):
     print(params)
     popSize = params[0]
-    epochs = int(4000/popSize)
     constraint = gp.staticLimit(key=operator.attrgetter("height"), max_value=params[1])
     e = Eplex(len(train_X), bases, tools.selAutomaticEpsilonLexicase, constraint)
     e.runGeneticRegression(train_X, train_Y, popSize, epochs, params[2], 1-params[2])
@@ -55,7 +56,6 @@ def geneticRun(params, train_X, train_Y, bases):
 class Eplex:
     def evalSymbReg(self, individual):
         func = self.toolbox.compile(expr=individual)
-
         out = (func(*self.X) - self.y)**2
         out[out!=out]=100
         return np.sum(out)/self.y.shape[0],

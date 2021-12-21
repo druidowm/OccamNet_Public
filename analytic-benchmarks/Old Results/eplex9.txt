@@ -1,0 +1,11 @@
+inequality(sin(add(ARG1, ARG0), ARG0), add(add(ARG0, ARG0), add(ARG0, ARG0)), add(ARG0, ARG0))
+add(add(add(ARG0, ARG0), add(ARG1, ARG1)), add(add(ARG1, ARG0), add(ARG0, ARG1)))
+add(add(add(ARG1, ARG1), add(ARG0, ARG0)), add(ARG0, add(ARG1, ARG0)))
+add(add(add(ARG1, ARG1), add(ARG1, ARG0)), add(add(ARG0, ARG0), add(ARG0, ARG1)))
+add(add(add(ARG1, ARG1), add(ARG1, ARG0)), add(add(ARG0, ARG1), ARG1))
+add(add(sin(ARG1, ARG1), add(ARG0, ARG1)), add(add(ARG0, ARG0), add(ARG0, ARG0)))
+add(add(add(ARG0, ARG1), add(ARG1, ARG1)), add(add(ARG0, ARG1), add(ARG1, ARG1)))
+add(add(add(ARG0, ARG0), add(ARG1, ARG0)), add(add(ARG1, ARG0), add(ARG0, ARG0)))
+add(add(add(ARG1, ARG1), add(ARG1, ARG1)), add(add(ARG1, ARG0), ARG1))
+add(add(add(ARG0, ARG1), add(ARG0, ARG1)), add(add(ARG0, ARG0), add(ARG1, ARG0)))
+0:00:20.179990

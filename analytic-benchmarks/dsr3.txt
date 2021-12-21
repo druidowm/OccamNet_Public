@@ -1,0 +1,12 @@
+sin(x₁) + sin(2⋅x₁) + sin(3⋅x₁)
+sin(x₁) + sin(2⋅x₁) + sin(3⋅x₁)
+sin(x₁) + sin(2⋅x₁) + sin(3⋅x₁)
+sin(x₁) + sin(2⋅x₁) + sin(3⋅x₁)
+sin(x₁) + sin(2⋅x₁) + sin(3⋅x₁)
+sin(x₁) + sin(2⋅x₁) + sin(3⋅x₁)
+sin(x₁) + sin(2⋅x₁) + sin(3⋅x₁)
+sin(x₁) + sin(2⋅x₁) + sin(3⋅x₁)
+sin(x₁) + sin(2⋅x₁) + sin(3⋅x₁)
+sin(x₁) + sin(2⋅x₁) + sin(3⋅x₁)
+10
+0:00:36.360554
