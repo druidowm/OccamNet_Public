@@ -1,0 +1,11 @@
+add(multiply(add(ARG1, ARG0), add(ARG2, ARG1)), multiply(add(ARG2, ARG0), ARG0))
+multiply(multiply(multiply(ARG3, ARG3), add(ARG1, ARG1)), add(ARG3, protectedDiv(ARG3, ARG0)))
+multiply(multiply(add(ARG3, ARG3), multiply(ARG3, ARG3)), add(protectedDiv(ARG1, ARG0), ARG1))
+multiply(multiply(add(ARG3, ARG3), multiply(ARG3, ARG3)), add(protectedDiv(ARG1, ARG0), ARG1))
+add(add(protectedDiv(ARG0, ARG2), multiply(ARG1, ARG1)), protectedDiv(add(ARG1, ARG0), protectedDiv(ARG2, ARG0)))
+add(multiply(add(ARG1, ARG0), add(ARG2, ARG1)), multiply(add(ARG2, ARG0), ARG0))
+multiply(add(ARG1, protectedDiv(ARG1, ARG0)), multiply(multiply(ARG3, ARG3), multiply(ARG3, ARG3)))
+multiply(add(protectedDiv(ARG1, ARG0), multiply(ARG2, ARG1)), multiply(add(ARG3, ARG3), add(ARG3, ARG3)))
+add(multiply(add(ARG0, ARG2), ARG0), multiply(add(ARG1, ARG2), add(ARG1, ARG0)))
+add(multiply(add(ARG1, ARG0), add(ARG1, ARG2)), multiply(add(ARG2, ARG0), multiply(ARG2, ARG0)))
+0:00:35.839971

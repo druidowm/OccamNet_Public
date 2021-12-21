@@ -1,0 +1,11 @@
+0.000000000000+(np.sin((x0+(x0+x0)))+(np.sin((x0+x0))+np.sin(x0)))
+0.000000000000+(np.sin((x0+(x0+x0)))+(np.sin((x0+x0))+np.sin(x0)))
+0.000000000000+(np.sin((x0+(x0+x0)))+(np.sin((x0+x0))+np.sin(x0)))
+0.000000000000+(np.sin((x0+(x0+x0)))+(np.sin((x0+x0))+np.sin(x0)))
+0.000000000000+(np.sin((x0+(x0+x0)))+(np.sin((x0+x0))+np.sin(x0)))
+0.000000000000+(np.sin((x0+(x0+x0)))+(np.sin((x0+x0))+np.sin(x0)))
+0.000000000000+(np.sin((x0+(x0+x0)))+(np.sin((x0+x0))+np.sin(x0)))
+0.000000000000+(np.sin((x0+(x0+x0)))+(np.sin((x0+x0))+np.sin(x0)))
+0.000000000000+(np.sin((x0+(x0+x0)))+(np.sin((x0+x0))+np.sin(x0)))
+0.000000000000+(np.sin((x0+(x0+x0)))+(np.sin((x0+x0))+np.sin(x0)))
+0:13:35.977836

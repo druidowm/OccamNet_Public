@@ -18,11 +18,15 @@ def getEqn(line, numVars):
         line = line[line.find(" ")+1:]
     eqn = line[:-1]
 
+    eqn = eqn.replace("asin","asne")
+    eqn = eqn.replace("acos","acse")
     eqn = eqn.replace("log","np.log")
     eqn = eqn.replace("exp","np.exp")
     eqn = eqn.replace("cos","np.cos")
     eqn = eqn.replace("sin","np.sin")
     eqn = eqn.replace("sqrt","np.sqrt")
+    eqn = eqn.replace("asne","np.arcsin")
+    eqn = eqn.replace("acse","np.arccos")
 
     vars = "x0"
     for i in range(1,numVars):

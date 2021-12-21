@@ -314,9 +314,10 @@ class Network(nn.Module):
             #    path,prob = self.getPathMaxProb()
             #    print("Epoch "+str(i)+", Average Loss: "+str(losses[-1])+", Best Function: "+self.applySymbolic(path)[0]+", With Probability: "+str(prob.item()))
 
-            if len(errors) >= 30:
+            check_distance = 30
+            if len(errors) >= check_distance:
                 conv = True
-                for o in range(-2,-31,-1):
+                for o in range(-2,-(check_distance+1),-1):
                     if not (abs(errors[-1]-errors[o]) < 0.01):
                         conv = False
                 if conv == True:

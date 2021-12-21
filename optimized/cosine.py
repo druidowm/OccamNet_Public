@@ -12,12 +12,13 @@ import numpy as np
 times = []
 
 for i in range(10):
-    x = 200*torch.rand(400)-100
+    size= 200
+    x = 200*torch.rand(size)-100
     y = torch.cos(x)
 
     x = torch.unsqueeze(x,1)
-    x2 = torch.full((400,1),math.pi)
-    x3 = torch.full((400,1),2)
+    x2 = torch.full((size,1),math.pi)
+    x3 = torch.full((size,1),2)
     X = torch.cat((x,x2,x3),1)
 
     now1 = datetime.datetime.now()

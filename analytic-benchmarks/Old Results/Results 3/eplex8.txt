@@ -1,0 +1,12 @@
+inequality(multiply(negative(ARG2), multiply(ARG0, ARG2)), ARG0, inequality(inequality(ARG1, ARG2, ARG0), multiply(ARG1, ARG1), ARG0))
+inequality(negative(ARG0), ARG0, inequality(negative(ARG2), negative(multiply(ARG3, ARG1)), multiply(multiply(ARG2, ARG1), ARG1)))
+inequality(inequality(ARG3, ARG0, negative(ARG3)), multiply(inequality(ARG1, ARG1, negative(ARG1)), inequality(ARG1, ARG1, negative(ARG1))), inequality(ARG0, inequality(ARG3, inequality(ARG1, ARG1, ARG3), inequality(ARG2, ARG0, ARG3)), ARG0))
+inequality(ARG0, multiply(ARG1, ARG1), ARG0)
+negative(negative(multiply(inequality(ARG0, ARG1, ARG0), inequality(ARG0, ARG1, ARG2))))
+inequality(multiply(ARG3, ARG0), multiply(ARG1, ARG1), inequality(ARG0, ARG2, ARG0))
+multiply(inequality(ARG0, ARG1, negative(ARG0)), inequality(inequality(ARG3, ARG0, ARG1), ARG1, negative(inequality(ARG2, ARG2, ARG0))))
+multiply(inequality(inequality(ARG2, ARG0, ARG2), inequality(negative(ARG1), ARG1, ARG1), ARG2), inequality(inequality(multiply(ARG0, ARG1), ARG1, negative(ARG1)), ARG1, ARG0))
+inequality(ARG0, inequality(negative(ARG3), multiply(ARG3, ARG2), multiply(ARG1, ARG1)), ARG0)
+inequality(multiply(ARG3, multiply(ARG3, ARG0)), multiply(multiply(ARG1, ARG2), inequality(ARG0, ARG1, inequality(ARG2, ARG3, ARG0))), inequality(ARG0, ARG3, ARG0))
+10
+0:00:57.781870

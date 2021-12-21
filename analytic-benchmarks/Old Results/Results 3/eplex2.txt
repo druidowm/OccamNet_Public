@@ -1,0 +1,23 @@
+add(add(ARG0, ARG1), add(ARG1, ARG0))
+inequality(inequality(ARG0, ARG0, ARG0), multiply(ARG1, ARG1), subtract(ARG0, ARG0))
+add(ARG0, ARG1)
+negative(subtract(ARG0, ARG1))
+subtract(ARG1, ARG1)
+multiply(ARG1, ARG0)
+add(ARG0, ARG0)
+inequality(ARG0, ARG0, ARG0)
+negative(multiply(ARG1, ARG0))
+subtract(ARG1, inequality(ARG0, ARG1, ARG1))
+0
+0:00:46.195779MIN(inequality(subtract(MIN(ARG3, ARG4), MAX(ARG1, ARG4)), MIN(ARG1, subtract(ARG2, ARG4)), MIN(multiply(ARG1, ARG3), ARG2)), ARG0)
+MIN(subtract(ARG2, subtract(ARG3, ARG3)), MIN(ARG0, ARG1))
+MIN(ARG1, MIN(ARG2, ARG0))
+MIN(ARG2, MIN(MIN(ARG0, ARG1), MAX(ARG4, ARG1)))
+MIN(inequality(subtract(ARG4, ARG4), subtract(ARG0, ARG3), MIN(ARG2, inequality(ARG3, ARG0, ARG2))), ARG1)
+MIN(MIN(ARG0, ARG2), MIN(ARG0, ARG1))
+MIN(MIN(MIN(ARG2, ARG0), add(ARG1, ARG4)), ARG1)
+MIN(ARG0, MIN(ARG1, ARG2))
+MIN(MIN(ARG2, ARG0), ARG1)
+MIN(ARG2, MIN(ARG0, ARG1))
+10
+0:01:02.738524
