@@ -1,0 +1,12 @@
+started 1
+started 0
+started 2
+started 1
+started 2
+started 0
+started 2
+started 1
+started 0
+started 0
+started 1
+started 2

@@ -425,8 +425,8 @@ class NetworkConstants(nn.Module):
 
 
         probs = torch.gather(probs, 1, path) * torch.gather(weight.T, 0, path)
-        prob = torch.prod(probs,1)
-        return (paths,prob)
+        #prob = torch.prod(probs,1)#########
+        return (paths,probs)
     
     def getPathArgmax(self):
         path = []
@@ -649,7 +649,7 @@ class NetworkConstants(nn.Module):
 
                 numberCorrectEpochs.append(i*batchesPerEpoch+j)
                 outputs = torch.empty((train_X.shape[0],self.outputSize,self.recursiveDepth*sampleSize), dtype=torch.float)
-                probabilities = torch.empty((sampleSize*self.recursiveDepth), dtype=torch.float)
+                probabilities = torch.empty((sampleSize*self.recursiveDepth,self.outputSize), dtype=torch.float)#########
 
                 paths,probs = self.getTrainingSamples(sampleSize)
 
@@ -662,7 +662,7 @@ class NetworkConstants(nn.Module):
 
                 for k in range(sampleSize):
                     outputs[:,:,index:index+self.recursiveDepth] = outputList[k]
-                    probabilities[index:index+self.recursiveDepth] = probs[k]
+                    probabilities[index:index+self.recursiveDepth,:] = probs[k]#########
 
                     index+=self.recursiveDepth
 

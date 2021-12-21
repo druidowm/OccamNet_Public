@@ -4,6 +4,7 @@ from deap import creator
 from deap import tools
 from deap import gp
 
+import time
 #from scoop import futures
 
 import operator
@@ -52,6 +53,17 @@ def geneticRun(params, train_X, train_Y, val_X, val_Y):
     e.runGeneticRegression(train_X, train_Y, popSize, epochs, params[2], 1-params[2], val_X, val_Y)
     return e
 
+def geneticRunFullData(params, train_X, train_Y, val_X, val_Y, test_X, test_Y):
+    print(params)
+    startTime = time.perf_counter()
+    popSize = params[0]
+    epochs = params[1]
+    constraint = gp.staticLimit(key=operator.attrgetter("height"), max_value=params[2])
+    e = Eplex(len(train_X), [(np.add, 2),(np.subtract, 2),(np.multiply, 2),(protectedDiv, 2),(np.cos, 1),(np.sin, 1),(np.exp, 1),(protectedLog, 1)], tools.selAutomaticEpsilonLexicase, constraint)
+    e.runGeneticRegression(train_X, train_Y, popSize, epochs, params[3], 1-params[3], val_X, val_Y, test_X, test_Y)
+    endTime = time.perf_counter()
+    return (e,endTime-startTime)
+
 class Eplex:
     def evalSymbReg(self, individual):
         func = self.toolbox.compile(expr=individual)
@@ -86,7 +98,7 @@ class Eplex:
             self.toolbox.decorate("mutate", constraint)
 
 
-    def runGeneticRegression(self, X, y, popSize, epochs, cxpb, mutpb, val_X, val_Y):
+    def runGeneticRegression(self, X, y, popSize, epochs, cxpb, mutpb, val_X, val_Y, test_X, test_Y):
         self.X = X
         self.y = y
 
@@ -120,6 +132,8 @@ class Eplex:
             if val<self.bestVal:
                 self.bestVal = val
                 self.bestValFunction = function
+
+        self.bestTest = self.getError(self.bestValFunction, test_X, test_Y)
 
     def getError(self, individual, X, y):
         func = self.toolbox.compile(expr=individual)

@@ -86,7 +86,7 @@ class SetPartialSparse:
 class SetNoSparse:
     def getActivationsSparsity(self, inputSize, activationLists, outputSize):
         numItems = [outputSize]
-        for i in range(len(activationLists)-2,-1,-1):
+        for i in range(len(activationLists)-1,0,-1):
             numItems.insert(0,numItems[0]*self.getMaxInputs(activationLists[i]))
 
         newActivationLists = []
@@ -96,7 +96,7 @@ class SetNoSparse:
             newActivationList = []
             for i in range(len(activationLists[k])):
                 for j in range(numItems[k]):
-                    newActivationList.append(activationLists[k][i])
+                    newActivationList.append(activationLists[k][i].copy())
 
             newActivationLists.append(newActivationList)
             prevLayer += len(newActivationLists[-1])

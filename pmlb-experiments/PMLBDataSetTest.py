@@ -23,7 +23,7 @@ from numpy import random
 
 #import seaborn as sb
 
-from GeneticAlgorithm import geneticRun
+from GeneticAlgorithm import geneticRun, geneticRunFullData
 from Feynman import aiFeynmanRun as AFR
 from XGBoostClass import XGBobj
 from DataGenerators import DataGeneratorSample as DGS
@@ -115,6 +115,109 @@ def xgbGrid(parameters, train_X, train_Y, val_X, val_Y, test_X, test_Y):
             bestVal,bestValParams,
             bestValXGB.test(test_X, test_Y, test),avgTime)
 
+def occamNetRun(parameters, train_X, train_Y, val_X, val_Y, test_X, test_Y, MSELoss):
+    learningRate,endTemp,sDev,top,numFuncs,equalization,decay,numEpocs = parameters
+
+    loss = CEL(sDev,int(top*numFuncs),anomWeight = 0)
+    sparsifier = SNS()
+
+    n = Network(train_X[0].shape[0],layers,1,sparsifier,loss,learningRate,10,endTemp, equalization)
+
+    trainFunction, valFunction = n.trainFunction(numEpocs, numFuncs, decay, train_X, train_Y, val_X, val_Y)
+    train = MSELoss(train_Y, n.forwardOneFunction(train_X,trainFunction)[:,0]).item()
+    val = MSELoss(val_Y, n.forwardOneFunction(val_X,valFunction)[:,0]).item()
+    test = MSELoss(test_Y, n.forwardOneFunction(test_X,valFunction)[:,0]).item()
+    return (train,val,test,trainFunction,valFunction)
+
+def occamNetRunFullData(parameters, train_X, train_Y, val_X, val_Y, test_X, test_Y, MSELoss):
+    learningRate,endTemp,sDev,top,numFuncs,equalization,decay,numEpocs = parameters
+
+    loss = CEL(sDev,int(top*numFuncs),anomWeight = 0)
+    sparsifier = SNS()
+
+    n = Network(train_X[0].shape[0],layers,1,sparsifier,loss,learningRate,10,endTemp, equalization)
+
+    trainFunction, valFunction = n.trainFunction(numEpocs, numFuncs, decay, train_X, train_Y, val_X, val_Y)
+    train = MSELoss(train_Y, n.forwardOneFunction(train_X,trainFunction)[:,0]).item()
+    val = MSELoss(val_Y, n.forwardOneFunction(val_X,valFunction)[:,0]).item()
+    test = MSELoss(test_Y, n.forwardOneFunction(test_X,valFunction)[:,0]).item()
+    return (train,val,test,n.applySymbolic(trainFunction)[0],n.applySymbolic(valFunction)[0])
+                                
+def occamNetGridFullData(parameters, train_X, train_Y, val_X, val_Y, test_X, test_Y):
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    train_X = torch.tensor(train_X, device = device).type(torch.float)
+    train_Y = torch.tensor(train_Y, device = device).type(torch.float)
+    val_X = torch.tensor(val_X, device = device).type(torch.float)
+    val_Y = torch.tensor(val_Y, device = device).type(torch.float)
+    test_X = torch.tensor(test_X, device = device).type(torch.float)
+    test_Y = torch.tensor(test_Y, device = device).type(torch.float)
+
+    MSELoss = nn.MSELoss()
+
+    parameterCombinations = []
+
+    for learningRate in parameters[0]:
+        for endTemp in parameters[1]:
+            for sDev in parameters[2]:
+                for top in parameters[3]:
+                    for numFuncs in parameters[4]:
+                        for equalization in parameters[5]:
+                            for decay in parameters[6]:
+                                for epochs in parameters[7]:
+                                    parameterCombinations.append((learningRate,endTemp,sDev,top,numFuncs,equalization,decay,epochs))
+    
+    out = []
+    times = []
+    for param in parameters:
+        startTime = time.perf_counter()
+        output = occamNetRun(param,train_X,train_Y,val_X,val_Y,test_X,test_Y,MSELoss)
+        endTime = time.perf_counter()
+        out.append(output)
+        times.append(endTime-startTime)
+
+    train = []
+    val = []
+    test = []
+    trainFunction = []
+    valFunction = []
+    for data in out:
+        trainMSE,valMSE,testMSE,trainFunc,valFunc = data
+        train.append(trainMSE)
+        val.append(valMSE)
+        test.append(testMSE)
+        trainFunction.append(trainFunc)
+        valFunction.append(valFunc)
+    return (parameters,train,val,test,trainFunction,valFunction,times)
+
+def geneticGridFullData(parameters, train_X, train_Y, val_X, val_Y, test_X, test_Y):
+    train_X = [train_X[:,i] for i in range(train_X.shape[1])]
+    val_X = [val_X[:,i] for i in range(val_X.shape[1])]
+    test_X = [test_X[:,i] for i in range(test_X.shape[1])]
+
+    params = []
+    for popSize in parameters[0]:
+        for epochs in parameters[1]:
+            for constraint in parameters[2]:
+                for crossover in parameters[3]:
+                    params.append([popSize,epochs,constraint,crossover])
+    outs = [geneticRunFullData(param, train_X, train_Y, val_X, val_Y) for param in params]
+
+    train = []
+    val = []
+    test = []
+    trainFunction = []
+    valFunction = []
+    times = []
+    for data in outs:
+        e,runTime = data
+        times.append(runTime)
+        train.append(e.bestTrain)
+        trainFunction.append(e.bestTrainFunction)
+        val.append(e.bestVal)
+        valFunction.append(e.bestValFunction)
+        test.append(e.bestTest)
+
+    return (parameters,train,val,test,trainFunction,valFunction,times)
 
 def occamNetGrid(parameters, train_X, train_Y, val_X, val_Y, test_X, test_Y):
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")

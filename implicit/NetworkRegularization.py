@@ -404,10 +404,7 @@ class NetworkConstants(nn.Module):
         for i in range(0,len(self.layers)-1):
             weight = F.softmax(self.layers[i].weight/self.temp, dim=1)
 
-            try:
-                path = Categorical(weight).sample([sampleSize])
-            except:
-                None
+            path = Categorical(weight).sample([sampleSize])
 
             paths.append(path)
 

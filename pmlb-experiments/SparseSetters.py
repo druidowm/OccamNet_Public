@@ -14,7 +14,7 @@ class SetNoSparse:
             newActivationList = []
             for i in range(len(activationLists[k])):
                 for j in range(numItems[k]):
-                    newActivationList.append(activationLists[k][i])
+                    newActivationList.append(activationLists[k][i].copy())
 
             newActivationLists.append(newActivationList)
 
