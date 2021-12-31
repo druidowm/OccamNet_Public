@@ -29,9 +29,9 @@ def geneticGridFullData(parameters, train_X, train_Y, val_X, val_Y, test_X, test
         e,runTime = data
         times.append(runTime)
         train.append(e.bestTrain)
-        trainFunction.append(e.bestTrainFunction)
+        trainFunction.append(str(e.bestTrainFunction))
         val.append(e.bestVal)
-        valFunction.append(e.bestValFunction)
+        valFunction.append(str(e.bestValFunction))
         test.append(e.bestTest)
 
     return (parameters,train,val,test,trainFunction,valFunction,times)
@@ -44,13 +44,13 @@ def main(i):
     item = data[i]
     print(item[0])
     trainData = item[1]
-    f = open("occamNetPMLB.txt", "a")
+    f = open("geneticPMLB.txt", "a")
     f.write(f"started {i}\n")
     f.close()
 
-    result = geneticGridFullData([[500, 1000], [1000], [4], [0.2,0.5,0.8]],
+    result = geneticGridFullData([[250, 500, 1000, 2000, 4000], [1000], [4], [0.2,0.5,0.8]],#,0.5,0.8]],
                           trainData[0], trainData[1], trainData[2], trainData[3], trainData[4], trainData[5])
-    with open(f"geneticPMLB{i}.txt", "wb") as f:
+    with open(f"geneticPMLB{i}.dat", "wb") as f:
         pickle.dump(result, f)
 
 parser = argparse.ArgumentParser()
