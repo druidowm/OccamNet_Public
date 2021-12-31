@@ -213,6 +213,50 @@ class Network(nn.Module):
 
         weight = F.softmax(self.layers[-1].weight/self.endTemp, dim=1)
 
+        try:
+            path = Categorical(weight).sample([sampleSize])
+        except Exception as e:
+            print(e)
+            print(f"weight is {weight}")
+            print(f"layer weights are {self.layers[-1].weight}")
+            print(f"scaled layer weights are {self.layers[-1].weight}")
+            raise e
+
+        paths.append(path)
+
+
+        logprobs = torch.gather(logprobs, 1, path) + torch.log(torch.gather(weight.T, 0, path))
+        logprob = torch.sum(logprobs,1)
+
+        return (paths,logprob)
+
+
+    def getTrainingSamples2(self, sampleSize):
+        paths = []
+        logprobs = torch.zeros((sampleSize,self.inputSize), dtype = torch.float, device = self.device)
+
+        for i in range(0,len(self.layers)-1):
+            weight = F.softmax(self.layers[i].weight/self.temp, dim=1)
+        
+            path = Categorical(self.layers[i].weight/self.temp).sample([sampleSize])
+
+            paths.append(path)
+
+            logprobs2 = torch.gather(logprobs, 1, path) + torch.log(torch.gather(weight.T, 0, path))
+
+            logprob = torch.zeros((sampleSize,len(self.activationLayers[i].activations)), device = self.device)
+            index = 0
+            for j in range(0,logprob.shape[1]):
+                for k in range(index,index+self.activationLayers[i].activations[j].numInputs):
+                    logprob[:,j] += logprobs2[:,k]
+                index+= self.activationLayers[i].activations[j].numInputs
+
+
+            logprobs = torch.cat([logprob,logprobs], dim = 1)
+
+
+        weight = F.softmax(self.layers[-1].weight/self.endTemp, dim=1)
+
         path = Categorical(weight).sample([sampleSize])
         paths.append(path)
 
@@ -316,7 +360,70 @@ class Network(nn.Module):
             losses.append(lossVal.item())
 
             path,prob = self.getPathMaxProb()
-            print("Epoch "+str(i)+", Average Loss: "+str(losses[-1])+", Best Function: "+self.applySymbolic(path)[0]+", With Probability: "+str(prob.item()))
+            if i%100 == 0:
+                print("Epoch "+str(i)+", Average Loss: "+str(losses[-1])+", Best Function: "+self.applySymbolic(path)[0]+", With Probability: "+str(prob.item()))
+
+
+            pred = self.forwardOneFunction(train_X, path)[:,0]
+            bestPathError = MSELoss(train_Y,pred).item()
+
+            if bestPathError < bestTrainFunctionError:
+                bestTrainFunctionError = bestPathError
+                bestTrainFunction = [item.cpu().numpy() for item in path]
+
+            if val_X != None:
+                pred = self.forwardOneFunction(val_X, path)[:,0]
+                bestPathError = MSELoss(val_Y,pred).item()
+
+                if bestPathError < bestValFunctionError:
+                    bestValFunctionError = bestPathError
+                    bestValFunction = [item.cpu().numpy() for item in path]
+
+        return (bestTrainFunction, bestValFunction)
+
+    def trainFunctionBatch(self, epochs, sampleSize, batchSize, decayRate, train_X, train_Y, val_X = None, val_Y = None):
+        optimizer = torch.optim.Adam(self.parameters(), lr=self.learningRate)
+        scheduler = decay(optimizer, decayRate)
+        losses = []
+        errors = []
+
+        MSELoss = nn.MSELoss()
+
+        bestTrainFunction = None
+        bestTrainFunctionError = float("inf")
+
+        bestValFunction = None
+        bestValFunctionError = float("inf")
+
+        train_Y_unsqueeze = train_Y.unsqueeze(1)
+
+        for i in range(epochs):
+            logprobs = torch.empty((sampleSize*batchSize,), dtype=float, device = self.device)
+            output = torch.empty((train_X.shape[0],sampleSize*batchSize,1), dtype=float, device = self.device)
+            
+            for j in range(batchSize):
+                try:
+                    paths,logprobs[j*sampleSize:(j+1)*sampleSize] = self.getTrainingSamples(sampleSize)
+                except:
+                    print(f"loss is {lossVal}")
+                    for layer in self.layers:
+                        print(f"gradient for layer is {layer.weight.grad}")
+                
+                output[:,j*sampleSize:(j+1)*sampleSize,:] = self.forward(train_X, paths)
+
+            lossVal = self.loss.getLossMultipleSamples(logprobs, train_Y_unsqueeze, output)
+
+            optimizer.zero_grad()
+            lossVal.backward()
+            optimizer.step()
+
+            scheduler.step()
+
+            losses.append(lossVal.item())
+
+            path,prob = self.getPathMaxProb()
+            if i%100 == 0:
+                print("Epoch "+str(i)+", Average Loss: "+str(losses[-1])+", Best Function: "+self.applySymbolic(path)[0]+", With Probability: "+str(prob.item()))
 
 
             pred = self.forwardOneFunction(train_X, path)[:,0]

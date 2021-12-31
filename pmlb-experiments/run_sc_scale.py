@@ -29,9 +29,15 @@ def occamNetRunFullData(parameters, train_X, train_Y, val_X, val_Y, test_X, test
     loss = CEL(sDev,int(top*numFuncs),anomWeight = 0)
     sparsifier = SNS()
 
-    n = Network(train_X[0].shape[0],layers,1,sparsifier,loss,learningRate,10,endTemp, equalization)
+    n = Network(train_X[0].shape[0],layers,1,sparsifier,loss,learningRate,10,endTemp,equalization)
 
-    trainFunction, valFunction = n.trainFunction(numEpocs, numFuncs, decay, train_X, train_Y, val_X, val_Y)
+    batchSize = max(train_X.shape[0]*numFuncs//8000000,1)
+    print(batchSize)
+    numFuncs2 = numFuncs//batchSize
+    print(numFuncs2)
+    print(numFuncs-batchSize*numFuncs2)
+
+    trainFunction, valFunction = n.trainFunctionBatch(numEpocs, numFuncs2, batchSize, decay, train_X, train_Y, val_X, val_Y)
     train = MSELoss(train_Y, n.forwardOneFunction(train_X,trainFunction)[:,0]).item()
     val = MSELoss(val_Y, n.forwardOneFunction(val_X,valFunction)[:,0]).item()
     test = MSELoss(test_Y, n.forwardOneFunction(test_X,valFunction)[:,0]).item()
@@ -63,11 +69,13 @@ def occamNetGridFullData(parameters, train_X, train_Y, val_X, val_Y, test_X, tes
     out = []
     times = []
     i=0
-    for param in parameters:
+    for param in parameterCombinations:
+        print(param)
         startTime = time.perf_counter()
         output = occamNetRunFullData(param,train_X,train_Y,val_X,val_Y,test_X,test_Y,MSELoss)
         endTime = time.perf_counter()
         out.append(output)
+        print(endTime-startTime)
         times.append(endTime-startTime)
         print(i)
         i+=1
@@ -97,10 +105,12 @@ def main(i):
     f.write(f"started {i}\n")
     f.close()
 
-    result = occamNetGridFullData([[0.1],[10], [0.1], [0.1], [500], [0], [1], [100]],#[[0.1, 0.5, 1], [10], [0.1, 0.5, 1], [0.1, 0.5, 0.9], [500,1000,10000,20000,40000], [0, 1, 5], [1], [1000]],
+    result = occamNetGridFullData([[0.1, 0.5, 1], [10], [0.1, 0.5, 1], [0.1, 0.5, 0.9], [64000], [5], [1], [1000]],#[[0.1, 0.5, 1], [10], [0.1, 0.5, 1], [0.1, 0.5, 0.9], [250,1000,4000,16000,64000], [0, 1, 5], [1], [1000]],
                           trainData[0], trainData[1], trainData[2], trainData[3], trainData[4], trainData[5])
-    with open(f"occamNetPMLB{i}.txt", "wb") as f:
+    with open(f"occamNetPMLB{i}.dat", "wb") as f:
         pickle.dump(result, f)
+    
+    print("Done!")
 
 
 if __name__ == '__main__':

@@ -18,12 +18,10 @@ def main():
     os.makedirs('./scripts', exist_ok=True)
     os.makedirs('./logs', exist_ok=True)
     data = pickle.load(file)
-    for i, item in enumerate(data):
-        print(i)
-        assign_jobs(i)
-        if i==2:
-            return
-    #assign_jobs(13)
+    #for i, item in enumerate(data):
+    #    print(i)
+    #    assign_jobs(i)
+    assign_jobs(13)
 
 
 if __name__ == '__main__':
