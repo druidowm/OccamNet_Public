@@ -238,7 +238,7 @@ class Network(nn.Module):
         for i in range(0,len(self.layers)-1):
             weight = F.softmax(self.layers[i].weight/self.temp, dim=1)
         
-            path = Categorical(self.layers[i].weight/self.temp).sample([sampleSize])
+            path = Categorical(logits = self.layers[i].weight/self.temp).sample([sampleSize])
 
             paths.append(path)
 
@@ -257,7 +257,7 @@ class Network(nn.Module):
 
         weight = F.softmax(self.layers[-1].weight/self.endTemp, dim=1)
 
-        path = Categorical(weight).sample([sampleSize])
+        path = Categorical(logits = self.layers[-1].weight/self.endTemp).sample([sampleSize])
         paths.append(path)
 
 
@@ -402,13 +402,7 @@ class Network(nn.Module):
             output = torch.empty((train_X.shape[0],sampleSize*batchSize,1), dtype=float, device = self.device)
             
             for j in range(batchSize):
-                try:
-                    paths,logprobs[j*sampleSize:(j+1)*sampleSize] = self.getTrainingSamples(sampleSize)
-                except:
-                    print(f"loss is {lossVal}")
-                    for layer in self.layers:
-                        print(f"gradient for layer is {layer.weight.grad}")
-                
+                paths,logprobs[j*sampleSize:(j+1)*sampleSize] = self.getTrainingSamples2(sampleSize)
                 output[:,j*sampleSize:(j+1)*sampleSize,:] = self.forward(train_X, paths)
 
             lossVal = self.loss.getLossMultipleSamples(logprobs, train_Y_unsqueeze, output)

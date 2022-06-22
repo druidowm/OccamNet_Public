@@ -105,7 +105,7 @@ def main(i):
     f.write(f"started {i}\n")
     f.close()
 
-    result = occamNetGridFullData([[0.1, 0.5, 1], [10], [0.1, 0.5, 1], [0.1, 0.5, 0.9], [64000], [5], [1], [1000]],#[[0.1, 0.5, 1], [10], [0.1, 0.5, 1], [0.1, 0.5, 0.9], [250,1000,4000,16000,64000], [0, 1, 5], [1], [1000]],
+    result = occamNetGridFullData([[0.1, 0.5, 1], [10], [0.1, 0.5, 1], [0.1, 0.5, 0.9], [250,1000,4000,16000,64000], [0, 1, 5], [1], [1000]],
                           trainData[0], trainData[1], trainData[2], trainData[3], trainData[4], trainData[5])
     with open(f"occamNetPMLB{i}.dat", "wb") as f:
         pickle.dump(result, f)

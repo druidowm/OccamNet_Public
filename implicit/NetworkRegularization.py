@@ -79,6 +79,14 @@ class ActivationLayer:
 
             index += item.numInputs
         return (output,totalTrivial)
+
+    def testUnits(self, units):
+        output = []
+        index = 0
+        for item in self.activations:
+            output.append(item.propagateUnits(units[index:index+item.numInputs]))
+            index += item.numInputs
+        return output
     
     def setConstants(self, constants):
         for i in range(len(self.constantActivations)):
@@ -319,7 +327,21 @@ class NetworkConstants(nn.Module):
         self.plotLayer(500*len(self.activationLayers),500*len(self.activationLayers)+500,self.outputSize,self.sparse[len(self.activationLayers)])
         plt.show()
 
+    def testUnits(self, path, units, out):
+        for i in range(len(path)-1):
+            inter = []
+            for j in range(path[i].shape[0]):
+                inter.append(units[path[i][j]])
+            units = self.activationLayers[i].testUnits(inter)+units
 
+        inter = []
+        for j in range(path[-1].shape[0]):
+            inter.append(units[path[-1][j]])
+        
+        for unit1,unit2 in zip(inter,out):
+            if np.any(unit1 != unit2) and not np.isnan(unit1[0]):
+                return False
+        return True
 
     def applySymbolic(self, path):
         input = ["x_"+str(i) for i in range(self.inputSize)]
@@ -332,6 +354,7 @@ class NetworkConstants(nn.Module):
         for j in range(path[-1].shape[0]):
             inter.append("y_"+str(j)+"="+input[path[-1][j]])
         return inter
+
         
     def applySymbolicConstant(self, path):
 
@@ -678,7 +701,7 @@ class NetworkConstants(nn.Module):
                 elif method == "evolutionary":
                     constants = self.fitConstantsEvolutionary(input,path,y)
 
-    def trainFunction(self, dataGenerator, epochs, batchesPerEpoch, sampleSize, method, useMultiprocessing = False, saveState=False, saveStateSteps = None, trackHighestProb=False, plot=False, plotName = None):
+    def trainFunction(self, dataGenerator, epochs, batchesPerEpoch, sampleSize, method, useMultiprocessing = False, saveState=False, saveStateSteps = None, trackHighestProb=False, plot=False, plotName = None, units = None):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.learningRate)
         losses = []
         errors = []
@@ -700,19 +723,16 @@ class NetworkConstants(nn.Module):
 
         startTime = time.perf_counter()
         self.converged = False
+
+        if units != None:
+            inUnits = units[:self.inputSize]
+            outUnits = units[self.inputSize:]
+
         for i in range(epochs):
             lossTotal = 0
             errorTotal = 0
             for j in range(batchesPerEpoch):
                 pathIndex.append(i+j/batchesPerEpoch)
-
-                numberCorrectEpochs.append(i*batchesPerEpoch+j)
-                outputs = torch.empty((dataGenerator.batchSize,self.outputSize,self.recursiveDepth*sampleSize), dtype=torch.float)
-                probabilities = torch.empty((sampleSize*self.recursiveDepth), dtype=torch.float)
-                numTrivial = torch.empty((sampleSize*self.recursiveDepth))
-                flags = torch.empty((sampleSize*self.recursiveDepth))
-                numConstants = torch.empty((sampleSize*self.recursiveDepth))
-                numActivations = torch.empty((sampleSize*self.recursiveDepth))
 
                 x,y = dataGenerator.getBatch()
 
@@ -720,14 +740,38 @@ class NetworkConstants(nn.Module):
                 if saveState:
                     pastPaths.append(paths)
 
+                if units!= None:
+                    works = []
+                    for k in range(len(paths[0])):
+                        works.append(self.testUnits([item[k] for item in paths],inUnits,outUnits))
+                    works = torch.tensor(works,dtype=bool)
+
+                    paths = [item[works] for item in paths]
+                    probs = probs[works]
+
+
+
+                correctedSampleSize = probs.shape[0]
+                if correctedSampleSize == 0:
+                    print("ERROR: no samples have functional units. Continuing to the next batch.")
+                    pass
+
+                numberCorrectEpochs.append(i*batchesPerEpoch+j)
+                outputs = torch.empty((dataGenerator.batchSize,self.outputSize,self.recursiveDepth*correctedSampleSize), dtype=torch.float)
+                probabilities = torch.empty((correctedSampleSize*self.recursiveDepth), dtype=torch.float)
+                numTrivial = torch.empty((correctedSampleSize*self.recursiveDepth))
+                flags = torch.empty((correctedSampleSize*self.recursiveDepth))
+                numConstants = torch.empty((correctedSampleSize*self.recursiveDepth))
+                numActivations = torch.empty((correctedSampleSize*self.recursiveDepth))
+
                 index = 0
                 if useMultiprocessing:
-                    outputFlagsTrivial = pool.map(partial(self.forwardFitConstants, input = x, y = y, method = "gradient"),[[item[k] for item in paths] for k in range(sampleSize)])
+                    outputFlagsTrivial = pool.map(partial(self.forwardFitConstants, input = x, y = y, method = "gradient"),[[item[k] for item in paths] for k in range(correctedSampleSize)])
                 else:
-                    inList = [[item[k] for item in paths] for k in range(sampleSize)]
+                    inList = [[item[k] for item in paths] for k in range(correctedSampleSize)]
                     outputFlagsTrivial = [self.forwardFitConstants(item,input = x, y = y, method = "gradient") for item in inList]
 
-                for k in range(sampleSize):
+                for k in range(correctedSampleSize):
                     outputs[:,:,index:index+self.recursiveDepth],flags[index:index+self.recursiveDepth],numTrivial[index:index+self.recursiveDepth] = outputFlagsTrivial[k]
 
                     probabilities[index:index+self.recursiveDepth] = probs[k]
@@ -792,7 +836,7 @@ class NetworkConstants(nn.Module):
                 correctEqn = self.applySymbolicConstant(pathMaxProb)[0][0]
 
                 for paths in pastPaths:
-                    inList = [[item[k] for item in paths] for k in range(sampleSize)]
+                    inList = [[item[k] for item in paths] for k in range(correctedSampleSize)]
                     numberSampled = 0
                     for path in inList:
                         eqn = self.applySymbolicConstant(path)[0][0]

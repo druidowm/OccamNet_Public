@@ -216,9 +216,9 @@ class Network(nn.Module):
 
 
         logprobs = torch.gather(logprobs, 1, path) + torch.log(torch.gather(weight.T, 0, path))
-        logprob = torch.sum(logprobs,1)
+        #logprob = torch.sum(logprobs,1)
 
-        return (paths,logprob)
+        return (paths,logprobs)
 
 
     def getPathMaxProb(self):
@@ -295,6 +295,7 @@ class Network(nn.Module):
             paths,logprobs = self.getTrainingSamples(sampleSize)
 
             output = self.forward(train_X, paths)
+            #print(output.shape)
 
             lossVal,error = self.loss.getLossMultipleSamples(logprobs, train_Y_unsqueeze, output)
 
@@ -325,8 +326,9 @@ class Network(nn.Module):
                     break
             #input()
 
-        path,prob = self.getPathMaxProb()
-        print("Epoch "+str(i)+", Average Error: "+str(errors[-1])+", Best Function: "+self.applySymbolic(path)[0]+", With Probability: "+str(prob.item()))
+            if i%100 == 0:
+                path,prob = self.getPathMaxProb()
+                print("Epoch "+str(i)+", Average Error: "+str(errors[-1])+", Best Function: "+self.applySymbolic(path)[0]+", With Probability: "+str(prob.item()))
 
 
             

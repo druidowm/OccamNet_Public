@@ -1,6 +1,31 @@
 from abc import ABC,abstractmethod
 import torch
 import sympy as sp
+import numpy as np
+
+#Nan represents unfixed units. Not wrong units.
+def checkNan(input):
+    return np.isnan(input[0])
+
+#Inf represents wrong units that need to be propagated further
+def checkInf(input):
+    return np.isinf(input[0])
+
+def matchUnits(unit1,unit2):
+    if np.any(unit1 != unit2):
+        if checkNan(unit1):
+            return unit2
+        if checkNan(unit2):
+            return unit1
+        return np.full(unit1.shape,np.inf)
+    return unit1
+
+def checkNonzero(unit):
+    if np.any(unit):
+        if not checkNan(unit):
+            return np.full(unit.shape,np.inf)
+        return np.zeros(unit.shape)
+    return unit
 
 class Base(ABC):
     @abstractmethod
@@ -9,6 +34,10 @@ class Base(ABC):
 
     @abstractmethod
     def getSymbolicOutput(self, input):
+        pass
+    
+    @abstractmethod
+    def propagateUnits(self, input):
         pass
 
 class BaseWithConstants(Base):
@@ -37,6 +66,9 @@ class Add(Base):
     def copy(self):
         return Add()
 
+    def propagateUnits(self, input):
+        return matchUnits(input[0],input[1])
+
 
 class Add3(Base):
     numInputs = 3
@@ -56,6 +88,9 @@ class Add3(Base):
     def copy(self):
         return Add3()
 
+    def propagateUnits(self, input):
+        input1 = matchUnits(input[0],input[1])
+        return matchUnits(input[2],input1)
 
 class Subtract(Base):
     numInputs = 2
@@ -75,6 +110,9 @@ class Subtract(Base):
     def copy(self):
         return Subtract()
 
+    def propagateUnits(self, input):
+        return matchUnits(input[0],input[1])
+
 class Multiply(Base):
     numInputs = 2
 
@@ -92,6 +130,13 @@ class Multiply(Base):
     
     def copy(self):
         return Multiply()
+    
+    def propagateUnits(self, input):
+        if checkInf(input[0]):
+            return input[0]
+        if checkInf(input[1]):
+            return input[1]
+        return input[0]+input[1]
 
 class Divide(Base):
     numInputs = 2
@@ -110,6 +155,14 @@ class Divide(Base):
 
     def copy(self):
         return Divide()
+
+    def propagateUnits(self, input):
+        if checkInf(input[0]):
+            return input[0]
+        if checkInf(input[1]):
+            return input[1]
+
+        return input[0]-input[1]
 
 class Sin(Base):
     numInputs = 1
@@ -139,6 +192,9 @@ class Sin(Base):
     def copy(self):
         return Sin()
 
+    def propagateUnits(self, input):
+        return checkNonzero(input[0])
+
 class Cos(Base):
     numInputs = 1
 
@@ -165,6 +221,9 @@ class Cos(Base):
     def copy(self):
         return Cos()
 
+    def propagateUnits(self, input):
+        return checkNonzero(input[0])
+
 
 class Square(Base):
     numInputs = 1
@@ -190,6 +249,9 @@ class Square(Base):
     def copy(self):
         return Square()
 
+    def propagateUnits(self, input):
+        return 2*input[0]
+
 class Cube(Base):
     numInputs = 1
 
@@ -214,6 +276,9 @@ class Cube(Base):
     def copy(self):
         return Cube()
 
+    def propagateUnits(self, input):
+        return 3*input[0]
+
 class AddConstant(BaseWithConstants):
     numInputs = 1
 
@@ -235,6 +300,9 @@ class AddConstant(BaseWithConstants):
 
     def copy(self):
         return AddConstant()
+
+    def propagateUnits(self, input):
+        return input[0]
 
 
 class MultiplyConstant(BaseWithConstants):
@@ -258,6 +326,9 @@ class MultiplyConstant(BaseWithConstants):
     
     def copy(self):
         return MultiplyConstant()
+    
+    def propagateUnits(self, input):
+        return np.full(input[0].shape, np.nan)
 
 class PowerConstant(BaseWithConstants):
     numInputs = 1
@@ -288,4 +359,7 @@ class PowerConstant(BaseWithConstants):
 
     def copy(self):
         return PowerConstant()
+
+    def propagateUnits(self, input):
+        return checkNonzero(input[0])
 
